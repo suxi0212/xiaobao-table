@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小宝帮你做表格</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+
+  <header>
+    <div class="logo">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="3" stroke="white" stroke-width="2"/>
+        <path d="M3 9.5h18M9 9.5V20M15 9.5V20" stroke="white" stroke-width="2"/>
+      </svg>
+      <h1>小宝帮你做表格</h1>
+    </div>
+    <p class="subtitle">把杂乱的文字、Word 文档或图片扔进来，小宝自动识别字段，帮你整理成整齐的表格</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 class="card-title">方式一：粘贴文字</h2>
+      <textarea id="inputText" placeholder="把文字粘贴到这里，例如：&#10;&#10;姓名：张三，年龄：28，城市：北京&#10;姓名：李四，年龄：35，城市：上海&#10;&#10;也支持逗号、Tab、竖线分隔的文本，或者每行一条记录。"></textarea>
+      <div class="controls">
+        <select id="parseMode">
+          <option value="auto">智能自动识别</option>
+          <option value="kv">键值对模式（姓名：张三）</option>
+          <option value="delim">分隔符模式（逗号 / Tab / 竖线）</option>
+          <option value="lines">每行一条记录（空格分列）</option>
+        </select>
+        <label class="checkbox">
+          <input type="checkbox" id="firstRowHeader" checked /> 首行作为表头
+        </label>
+        <span class="spacer"></span>
+        <button id="btnSample">试试示例</button>
+        <button id="btnParse" class="primary">开始整理</button>
+      </div>
+      <p class="hint">支持键值对、逗号 / Tab / 竖线分隔、每行一条等常见格式 · Ctrl + Enter 快速整理 · 全程本地处理，数据不上传</p>
+    </section>
+
+    <section class="card" id="fileCard">
+      <h2 class="card-title">方式二：上传文档 / 图片</h2>
+      <div class="dropzone" id="dropzone">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="#8a94a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3" stroke="#8a94a6" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p>把 Word 文档（.docx）、文本文件（.txt / .csv）或表格图片拖到这里</p>
+        <p class="dz-sub">支持一次多选，也支持整个文件夹；图片会自动 OCR 还原成表格，带边框的表格截图按原图行列原样还原</p>
+        <div class="dz-buttons">
+          <button id="btnPickFiles" type="button">选择文件</button>
+          <button id="btnPickFolder" type="button">选择文件夹</button>
+        </div>
+      </div>
+      <input type="file" id="fileInput" multiple accept=".docx,.doc,.txt,.csv,.md,.xls,.xlsx,image/*" hidden />
+      <input type="file" id="folderInput" webkitdirectory hidden />
+      <ul class="file-list" id="fileList" hidden></ul>
+      <div class="controls">
+        <label class="checkbox">
+          <input type="checkbox" id="withSource" checked /> 标注来源文件
+        </label>
+        <span class="spacer"></span>
+        <button id="btnClearFiles">清空列表</button>
+        <button id="btnParseFiles" class="primary">开始整理</button>
+      </div>
+      <p class="hint">Word 与文本文件纯本地解析；图片识别需要本地服务环境——双击网站文件夹里的「启动小宝.bat」后使用（首次识别需加载引擎，稍慢）。</p>
+    </section>
+
+    <section class="card" id="resultCard" hidden>
+      <div class="result-toolbar">
+        <span id="stats"></span>
+        <div class="actions">
+          <button id="btnAddRow">+ 添加行</button>
+          <button id="btnAddCol">+ 添加列</button>
+          <button id="btnCopy">复制表格</button>
+          <button id="btnCsv" class="primary">导出 CSV</button>
+          <button id="btnClear" class="danger">清空重来</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="resultTable"></table>
+      </div>
+      <p class="tip">提示：点击单元格可直接编辑内容，点击表头文字可重命名字段；「复制表格」后可直接粘贴到 Excel、WPS 或飞书表格。</p>
+    </section>
+  </main>
+
+  <footer>小宝帮你做表格 · 本地运行 · 数据安全</footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
