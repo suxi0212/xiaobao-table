@@ -545,7 +545,8 @@
           workerPath: abs('lib/worker.min.js'),
           corePath: abs('lib/tesseract-core.wasm.js'),
           langPath: abs('lib/tessdata'),
-          gzip: false,
+          // 语言包用 .gz（chi_sim 42MB→19MB、eng 22MB→10MB），公网首屏下载快一倍
+          gzip: true,
           cacheMethod: 'none',
           logger: (m) => {
             if (!ocrProgressCb) return;
